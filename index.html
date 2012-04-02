@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>cloudfoundry-checkins by crcsmnky</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>cloudfoundry-checkins</h1>
+        <p>A frighteningly simple checkin app that can be deployed on Cloud Foundry</p>
+        <p class="view"><a href="https://github.com/crcsmnky/cloudfoundry-checkins">View the Project on GitHub <small>crcsmnky/cloudfoundry-checkins</small></a></p>
+        <ul>
+          <li><a href="https://github.com/crcsmnky/cloudfoundry-checkins/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/crcsmnky/cloudfoundry-checkins/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/crcsmnky/cloudfoundry-checkins">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Cloud Foundry Checkins App</h1>
+
+<h2>Getting Started</h2>
+
+<p>Clone the source and install the dependencies. You'll also need to download and start MongoDB if you're planning to develop this thing locally. If you want to push the app to Cloud Foundry, you'll need an account there and the <code>vmc</code> tools.</p>
+
+<p>Get the app</p>
+
+<pre><code>$ git clone <a href="http://github.com/crcsmnky/cloudfoundry-checkins.git">http://github.com/crcsmnky/cloudfoundry-checkins.git</a>
+$ cd cloudfoundry-checkins
+$ npm install -d
+</code></pre>
+
+<p>Download and install MongoDB
+<a href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a>.</p>
+
+<p>Start the app</p>
+
+<pre><code>$ node app.js
+</code></pre>
+
+<p>And checkin like crazy</p>
+
+<pre><code>$ curl -d "comment=hello world" -d "lat=50&amp;lon=50" http://localhost:3000/checkin
+</code></pre>
+
+<p>To push the app to Cloud Foundry, <a href="http://start.cloudfoundry.com/tools/vmc/installing-vmc.html">install the Cloud Foundry CLI</a> and <a href="http://start.cloudfoundry.com/tools/deploying-apps.html">deploy an app</a>.</p>
+
+<h2>Background</h2>
+
+<p>This is just a <em>really</em> simple app I built to go along with my talk about MongoDB at the <a href="http://opentour.cloudfoundry.com/2012/austin">Cloud Foundry Open Tour</a> in Austin on April 5th.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/crcsmnky">crcsmnky</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
