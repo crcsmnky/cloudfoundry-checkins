@@ -25,4 +25,4 @@ To push the app to Cloud Foundry, [install the Cloud Foundry CLI](http://start.c
 
 ## Background
 
-This is just a really simple app I built to go along with my talk about MongoDB at the [Cloud Foundry Open Tour](http://opentour.cloudfoundry.com/2012/austin) in Austin on April 5th.
+This is just a *really* simple app I built to go along with my talk about MongoDB at the [Cloud Foundry Open Tour](http://opentour.cloudfoundry.com/2012/austin) in Austin on April 5th.
