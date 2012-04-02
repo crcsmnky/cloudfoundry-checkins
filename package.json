@@ -1,0 +1,8 @@
+{
+  "name": "cloudfoundry-checkins",
+  "version": "0.0.1",
+  "dependencies": {
+    "express":"",
+    "mongodb":""
+  }
+}
