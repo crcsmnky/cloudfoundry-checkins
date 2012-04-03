@@ -1,0 +1,635 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>MongoDB on Cloud Foundry</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/ribbon/styles/style.css">
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style>
+
+	<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/idea.css">
+	<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
+	<script>
+		hljs.tabReplace = '  ';
+		hljs.initHighlightingOnLoad();
+	</script>
+
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>MongoDB on Cloud Foundry</h1>
+		<p>Sandeep Parikh, 10gen</p>
+	</header>
+	
+	<div class="slide" id="Cover"><div>
+		<section>
+			<header>
+				<h1>Getting Started with MongoDB on Cloud Foundry</h1>
+			</header>
+			<img src="images/mongodb.png" alt="">
+			<div style="text-align:right">
+				Sandeep Parikh<br/>
+				sandeep.parikh@10gen.com<br/>
+				@crcsmnky
+			</div>
+		</section>
+	</div></div>
+
+	<div class="slide" id="10gen"><div>
+		<section>
+			<header>
+				<h2>What is 10gen</h2>
+			</header>
+			<ul>
+				<li>10gen created MongoDB over 4 years ago</li>
+				<li>Founded by Eliot Horowitz and Dwight Merriman</li>
+				<li>Inspired by work on DoubleClick, ShopWiki and Panther Express</li>
+				<li>Over 100 people</li>
+				<li>Funded by Sequoia, Flybridge Capital and Union Square Ventures</li>
+				<li>Offices in New York, Palo Alto, London and Dublin</li>
+				<li>(I'm based here in Austin)</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="databases"><div>
+		<section>
+			<header>
+				<h2>Next Generation Databases</h2>
+			</header>
+			<ul>
+				<li>Horizontal scaling</li>
+				<li>More real time requirements</li>
+				<li>Faster development time</li>
+				<li>Low upfront costs</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="partial"><div>
+		<section>
+			<header>
+				<h2>Partial Solutions</h2>
+			</header>
+			<ul>
+				<li>Object databases</li>
+				<li>Application level partitioning</li>
+				<li>Distributed key/value stores</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="nosql"><div>
+		<section>
+			<header>
+				<h2>What is NoSQL?</h2>
+			</header>
+			<ul>
+				<li>An assortment of varying products</li>
+				<li>Not relational, e.g. "not only SQL"</li>
+				<li>No unified query mechanism</li>
+				<li>But...<br/><b>You gain the ability to use extremely flexible data structures</b></li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="whoelse"><div>
+		<section>
+			<header>
+				<h2>Who Else</h2>
+			</header>
+			<ul>
+				<li>Google: BigTable</li>
+				<li>Amazon: DynamoDB</li>
+				<li>Datastax: Cassandra</li>
+				<li>Basho: Riak</li>
+				<li>Couchbase: CouchDB</li>
+				<li>...quite a few mote (graph, key-value, etc.)</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="basics"><div>
+		<section>
+			<header>
+				<h2>MongoDB Basics</h2>
+			</header>
+			<ul>
+				<li>High-performance data store</li>
+				<li>Document-oriented
+					<ul>
+						<li>JSON-style documents</li>
+						<li>Rich objects: arrays, dictionaries, etc.</li>
+						<li>Sub-documents</li>
+					</ul>
+				</li>
+				<li>Schema-free</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="moreinfo"><div>
+		<section>
+			<header>
+				<h2>Characteristics</h2>
+			</header>
+			<ul>
+				<li>Sophisticated secondary indexes</li>
+				<li>Dynamic, flexible queries</li>
+				<li>Sorting</li>
+				<li>Rich atomic updates, upserts</li>
+				<li>Aggregation framework for advanced data processing</li>
+				<li>Viable as a primary data store</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="scaling"><div>
+		<section>
+			<header>
+				<h2>Scaling</h2>
+			</header>
+			<ul>
+				<li>Scales linearly</li>
+				<li>Increase capacity with no downtime</li>
+				<li>All of this is transparent to your app</li>
+				<li>Replica Sets provide failover and data redundancy</li>
+				<li>Sharding partitions your data to scale writes</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="startingeasy"><div>
+		<section>
+			<header>
+				<h2>Getting Started is Easy</h2>
+			</header>
+			<ul>
+				<li>Download from <a href="http://www.mongodb.org" target="_blank">MongoDB.org</a></li>
+				<li>Untar/unzip and run mongod</li>
+				<li>Few configuration options</li>
+				<li>Easy to deploy and manage</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="document"><div>
+		<section>
+			<header>
+				<h2>Documents</h2>
+			</header>
+<pre><code class="javascript" style="font-size:smaller">> d = {
+	location: [50,50],
+	comment: “hello world”,
+	place: “Sheraton Austin”,
+	tags: [“hotel”, “conference”, “presentation”],
+	datetime: new Date()
+}
+> db.checkins.save(d);
+</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="querying"><div>
+		<section>
+			<header>
+				<h2>Querying</h2>
+			</header>
+<pre><code class="javascript" style="font-size:smaller">> db.checkins.find()
+ {
+	_id: ObjectId("4c4ba5c0672c685e5e8aabf3"),
+	location: [50,50],
+	comment: “hello world”,
+	place: “Sheraton Austin”,
+	tags: [“hotel”, “conference”, “presentation”],
+	datetime: ISODate("2012-04-02T00:34:13.714Z")
+}</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="operators"><div>
+		<section>
+			<header>Query Operators</header>
+			Any attribute can be queried with operators
+			<pre>$all, $exists, $mod, $ne, $in, $nin, $nor, $or, $size, $type</pre>
+			Or ranges
+			<pre>$lt, $lte, $gt, $gte</pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="queryingexample"><div>
+		<section>
+			<header>
+				<h2>Sample Queries</h2>
+			</header>
+			Find posts with any tags
+			<pre><code class="javascript" style="font-size:smaller">> db.checkins.find( { tags: { $exists:true } } )</code></pre>
+			Find checkins matching a regular expression
+			<pre><code class="javascript" style="font-size:smaller">> db.checkins.find( {place: /^Sheraton*/i } )</code></pre>
+			Count checkins by place
+			<pre><code class="javascript" style="font-size:smaller">> db.checkins.find( {place: 'Sheraton Austin'} ).count()</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="updatesexample"><div>
+		<section>
+			<header>
+				<h2>Sample Updates</h2>
+			</header>
+			<pre>$set, $unset, $inc, $push, $pushAll, $pull, $pullAll, $bit</pre>
+<pre><code class="javascript" style="font-size:smaller">> db.checkins.update({ _id: “...” }, 
+	$push: {tags: "new_tag"} );</code></pre>
+			Note: Many updates can be done in place ($inc) such that you can do hundreds of thousands per second.
+		</section>
+	</div></div>
+
+
+	<div class="slide" id="indexes"><div>
+		<section>
+			<header>
+				<h2>Indexes</h2>
+			</header>
+			Index nested documents
+<pre><code class="javascript" style="font-size:smaller">> db.checkins.ensureIndex( “comments.author”:1 )
+> db.checkins.find({‘comments.author’:’Fred’})</code></pre>
+Index on tags (multi-key index)
+<pre><code class="javascript" style="font-size:smaller">> db.checkins.ensureIndex( tags: 1)
+> db.checkins.find( { tags: ‘conference’ } )</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="moreindexes"><div>
+		<section>
+			<header>
+				<h2>Indexes</h2>
+			</header>
+Geospatial index
+<pre><code class="javascript" style="font-size:smaller">> db.posts.ensureIndex( “author.location”: “2d” )
+> db.checkins.find( “location”: { $near : [22,42] } )</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="appinfo"><div>
+		<section>
+			<header>
+				<h2>Simple App Using MongoDB</h2>
+			</header>
+			<ul>
+				<li>Checkins!</li>
+				<li>Node.js</li>
+				<li>Uses express, mongodb</li>
+				<li>Post comments/checkins about a location (lat/long)</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="appcode"><div>
+		<section>
+			<header>
+				<h2>Code Snippet</h2>
+			</header>
+<pre><code class="javascript" style="font-size:small">app.post('/checkin', function(req,res) { 
+  var comment = req.param('comment',null);
+  var location = [parseFloat(req.param("lat")), parseFloat(req.param("lon"))];
+  if(comment && location) {
+    mongodb.connect(mongourl, function(err,conn) {
+      conn.collection('checkins', function(err,coll) {
+        var obj = {'comment':comment, 'location':location, 'datetime':new Date()};
+        coll.insert(obj, {safe:true}, function(err) {
+          res.send(obj['_id']);
+        }); 
+      }); 
+    }); 
+  } 
+});</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="deploying"><div>
+		<section>
+			<header>
+				<h2>Using VMC</h2>
+			</header>
+<pre><code>$ gem install vmc
+$ vmc target api.cloudfoundry.com
+$ vmc login</code></pre>
+			Now update your app for Cloud Foundry
+		</section>
+	</div></div>
+
+	<div class="slide" id="appupdates"><div>
+		<section>
+			<header>
+				<h2>Updating Your App</h2>
+			</header>
+<pre><code class="javascript">var port = (process.env.VMC_APP_PORT || 3000);
+var host = (process.env.VCAP_APP_HOST || 'localhost');
+...
+app.listen(port, host);</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="pushing"><div>
+		<section>
+			<header>
+				<h2>Deploying Your App</h2>
+			</header>
+			<pre><code>$ vmc push
+$ curl myappname.cloudfoundry.com</code></pre>
+			Error!
+			We need to add support for MongoDB
+		</section>
+	</div></div>
+
+	<div class="slide" id="mongosupport"><div>
+		<section>
+			<header>
+				<h2>Adding Support for MongoDB</h2>
+			</header>
+			Create the service and bind it to your app
+			<pre><code>$ vmc create-service mongodb mymongodb myappname</code></pre>
+			Add support for it in your app
+			<pre><code class="javascript" style="font-size:small">if(process.env.VCAP_SERVICES) {
+  var env = JSON.parse(process.env.VCAP_SERVICES);
+  var mongo = env['mongodb-1.8'][0]['credentials'];
+}
+else {
+  var mongo = {
+    "hostname":"localhost","port":27017,"username":"","password":"","name":"","db":""
+  };
+}</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="tunneling"><div>
+		<section>
+			<header>
+				<h2>Working With Your Data</h2>
+			</header>
+			<pre><code>$ gem install caldecott</code></pre>
+			Side note, I also had to 
+			<pre><code>$ gem install bundler
+$ gem uninstall addressable -v 2.2.7</code></pre>
+			Now we can use "tunneling" provided by vmc tools
+		</section>
+	</div></div>
+
+	<div class="slide" id="mongotunnel"><div>
+		<section>
+			<header>
+				<h2>Connecting To MongoDB</h2>
+			</header>
+			<pre><code style="font-size:small">$ vmc tunnel mymongodb
+...
+Service connection info: 
+  username : ba3df857-4403-419c-9442-06ba78c33483
+  password : b6c18477-2810-42c1-83f7-96e0ec34d76a
+  name     : db
+...</code></pre>
+			Command output contains necessary connection information 
+			<pre><code style="font-size:small">$ mongo localhost:10000/db -u username -p password</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="housekeeping"><div>
+		<section>
+			<header>
+				<h2>App Housekeeping</h2>
+			</header>
+			<ul>
+				<li>App uses MongoDB's geospatial support</li>
+				<li>Before it can be used, you need to create an index on the location attribute</li>
+				<li>Fire up the tunnel and connect to MongoDB</li>
+			</ul>
+			<pre><code style="font-size:smaller">> db.checkins.ensureIndex( { "location":"2d" } )</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="generatedata"><div>
+		<section>
+			<header>
+				<h2>Generate Some Data</h2>
+			</header>
+			Checkin a few times
+			<pre><code style="font-size:small">curl -d "comment=hello world" -d "lat=50&lon=50" http://localhost:3000/checkin</code></pre>
+			Now using the tunneled MongoDB connection, can you see those checkins?
+			<pre><code style="font-size:smaller">> db.checkins.find()</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="learn"><div>
+		<section>
+			<header>
+				<h2>What Can We Learn?</h2>
+			</header>
+			<ul>
+				<li>Total checkins per day?</li>
+				<li>Average checkins per day?</li>
+				<li>Checkins by location?</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="mapreduce"><div>
+		<section>
+			<header>
+				<h2>Map-Reduce</h2>
+			</header>
+			<ul>
+				<li>Batch processing of data and aggregation operations</li>
+				<li>Kind of similar to GROUP BY</li>
+				<li>Functions written in Javascript</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="usingmr1"><div>
+		<section>
+			<header>
+				<h2>Using Map-Reduce</h2>
+			</header>
+			<ul>
+				<li>Total checkins per day</li>
+				<li>map()<br/>
+					Run across every document<br/>
+					Extract a key/value for each document</li>
+				<li>key: date, value: 1</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="usingmr2"><div>
+		<section>
+			<header>
+				<h2>Using Map-Reduce</h2>
+			</header>
+			<ul>
+				<li>reduce()<br/>
+					Takes the output of each map job<br/>
+					Applies some operation to each value</li>
+				<li>In this case, we sum values for each key</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="mrfunctions"><div>
+		<section>
+			<header>
+				<h2>Functions</h2>
+			</header>
+			map
+<pre><code class="javascript" style="font-size:small">function() {
+	emit(this.date, 1);
+}</code></pre>
+			reduce
+<pre><code class="javascript" style="font-size:small">function(key,values) {
+	var ret = 0;
+	values.forEach(function(value) {
+		ret += value;
+	})
+	return ret;
+}</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="backup"><div>
+		<section>
+			<header>
+				<h2>Backing Up Your Data with Mongodump</h2>
+			</header>
+<pre><code style="font-size:small">options:
+  -h [ --host ] arg        mongo host to connect to ("left,right" for pairs)
+  -d [ --db ] arg          database to use
+  -c [ --collection ] arg  collection to use (some commands)
+  -u [ --username ] arg    username
+  -p [ --password ] arg    password
+  --dbpath arg             directly access mongod data files in the given path,
+                           instead of connecting to a mongod instance - needs
+                           to lock the data directory, so cannot be used if a
+                           mongod is currently accessing the same path
+  --directoryperdb         if dbpath specified, each db is in a separate directory
+  -o [ --out ] arg (=dump) output directory
+  -q [ --query ] arg       json query
+  --oplog                  point in time backup (requires an oplog)
+  --repair                 repairs documents as it dumps from a corrupt db (requires --dbpath and -d/--db)
+  --forceTableScan         force a table scan (do not use $snapshot)</code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="restore"><div>
+		<section>
+			<header>
+				<h2>Restoring Your Data with Mongorestore</h2>
+			</header>
+<pre><code style="font-size:small">options:
+  -h [ --host ] arg       mongo host to connect to ( <set name>/s1,s2 for sets)
+  --port arg              server port. Can also use --host hostname:port
+  --ipv6                  enable IPv6 support (disabled by default)
+  -u [ --username ] arg   username
+  -p [ --password ] arg   password
+  --dbpath arg            directly access mongod database files in the given path, instead of connecting to 
+                          a mongod  server - needs to lock the data directory, so cannot be used if a mongod is 
+                          currently accessing the same path
+  --directoryperdb        if dbpath specified, each db is in a separate directory
+  --journal               enable journaling
+  -d [ --db ] arg         database to use
+  -c [ --collection ] arg collection to use (some commands)
+  --objcheck              validate object before inserting
+  --filter arg            filter to apply before inserting
+  --drop                  drop each collection before import
+  --oplogReplay           replay oplog for point-in-time restore
+  --keepIndexVersion      don't upgrade indexes to newest version</set></code>
+		</section>
+	</div></div>
+
+	<div class="slide" id="morebackups"><div>
+		<section>
+			<header>
+				<h2>Ongoing Backups</h2>
+			</header>
+			<ul>
+				<li>How do you get to daily backups?</li>
+				<li>Local cron job</li>
+				<li>Creates the tunnel and runs mongodump</li>
+				<li>Mongodump supports queries so you only backup what you want</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<div class="slide" id="rails"><div>
+		<section>
+			<header>
+				<h2>MongoDB + Rails + Cloud Foundry</h2>
+			</header>
+			In your config/mongo.yml
+			<pre><code style="font-size:small">production:
+host: <%= JSON.parse(ENV['VCAP_SERVICES'])['mongodb 1.8'].first['credentials']['hostname'] rescue 'localhost' %>
+port: <%= JSON.parse( ENV['VCAP_SERVICES'] )['mongodb-1.8'].first['credentials']['port'] rescue 27017 %>
+database:  <%= JSON.parse( ENV['VCAP_SERVICES'] )['mongodb-1.8'].first['credentials']['db'] rescue 'tutorial_db' %>
+username: <%= JSON.parse( ENV['VCAP_SERVICES'] )['mongodb-1.8'].first['credentials']['username'] rescue '' %>
+password: <%= JSON.parse( ENV['VCAP_SERVICES'] )['mongodb-1.8'].first['credentials']['password'] rescue '' %></code></pre>
+		</section>
+	</div></div>
+
+	<div class="slide" id="spring"><div>
+		<section>
+			<header>
+				<h2>MongoDB + Spring + Cloud Foundry</h2>
+			</header>
+			<p>Depending on how your app is built, Cloud Foundry can automatically reconfigure it for you upon deployment.</p>
+		</section>
+	</div></div>
+
+	<div class="slide" id="spring2"><div>
+		<section>
+			<header>
+				<h2>MongoDB + Spring + Cloud Foundry</h2>
+			</header>
+			<blockquote>Auto-reconfiguration occurs if Cloud Foundry detects a org.springframework.data.document.mongodb.MongoDbFactory bean.</blockquote>
+			<pre><code style="font-size:small">&lt;mongo:db-factory
+    id="mongoDbFactory" dbname="pwdtest" host="127.0.0.1"port="1234"
+    username="test_user" password="test_pass"  /></code></pre>
+			<a href="http://start.cloudfoundry.com/frameworks/java/spring/spring.html#using-cloud-foundry-services-in-spring-applications" target="_blank">Using Cloud Foundry Services in Spring Applications</a>
+		</section>
+	</div></div>
+
+	<div class="slide" id="theend"><div>
+		<section>
+			<header>
+				<h2>Questions?</h2>
+			</header>
+			<ul>
+				<li><a href="http://www.mongodb.org" target="_blank">MongoDB.org</a> is a great place to start</li>
+				<li>Twitter: <a href="http://twitter.com/crcsmnky" target="_blank">@crcsmnky</a></li>
+				<li>Email: <a href="mailto:sandeep.parikh@10gen.com">sandeep.parikh@10gen.com</a></li>
+				<li>Source: up on <a href="https://github.com/crcsmnky/cloudfoundry-checkins" target="_blank">github</a></li>
+				<li>We're hiring!</li>
+			</ul>
+		</section>
+	</div></div>
+
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
